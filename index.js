@@ -12,6 +12,17 @@ const cartSection = document.querySelector(".cart")
 const body = document.querySelector("body")
 let totalDiscounts = 0
 
+window.addEventListener("load", () => {
+    var cart = JSON.parse(localStorage.getItem("cart"))
+    cart && cart.forEach(cartItem => {
+        const newItem = createCartItem(cartItem.item, +cartItem.quantity)
+        newItem && cartSection.append(newItem)
+        updateSavings()
+        updatePrice()
+    })
+     
+})
+
 const createDiv = (klass) => {
     const div = document.createElement("div")
     div.className = klass
@@ -53,10 +64,12 @@ const createLabel = (text, htmlFor) => {
     return label
 }
 
-const createButton = (text, item) => {
+const createButton = (text, item = null) => {
     button = document.createElement("button")
     button.innerHTML = text
-    button.addEventListener("click", () => addToCart(item))
+    button.addEventListener("click", () => {
+        item ? addToCart(item) : completeCheckout()
+    })
     return button
 }
 
@@ -136,7 +149,7 @@ const generatePrice = (foodItem, amount) => {
 const createCartItem = (item, amount) => {
     let currentCart = Array.from(document.querySelectorAll(".cart-item"));
     const alreadyInCart = currentCart.find(cartItem => cartItem.children[0].innerHTML === item)
-
+    
     if (alreadyInCart) {
         oldPrice = alreadyInCart.children[4]
         alreadyInCart.children[2].innerHTML = +alreadyInCart.children[2].innerHTML + +amount
@@ -172,9 +185,9 @@ const createToast = (msg) => {
     }, 5000)
 }
 
-const addToCart = (item) => {
+const addToCart = (item, quantity = 0) => {
 
-    const quantity = document.querySelector("input").value
+    quantity = document.querySelector("input").value
     if (quantity <= 0) {
         createToast("Please select an amount greater than zero")
         return
@@ -182,11 +195,25 @@ const addToCart = (item) => {
 
     const cartItem = createCartItem(item, quantity)
     cartItem && cartSection.append(cartItem)
+    var cart = JSON.parse(localStorage.getItem("cart"))
+    console.log(cart);
+    if(cart) {
+        cart = [...cart, {item, quantity}]
+        localStorage.setItem("cart", JSON.stringify(cart)) 
+    } else {
+        cart = [{item, quantity}]
+        console.log(cart);
+        localStorage.setItem("cart", JSON.stringify(cart))
+    }
+    
+        
+
 
     body.removeChild(document.querySelector(".modal-backdrop"))
     updatePrice()
     updateSavings()
 }
+
 
 const updatePrice = () => {
     const cartPrices = Array.from(document.querySelectorAll(".item-price"))
@@ -215,4 +242,42 @@ const onSale = (item) => {
     } else {
         return ""
     } 
+}
+
+const openCheckout = () => {
+    const quantities = Array.from(document.querySelectorAll(".cart-quantity"))
+    const backdrop = createDiv("modal-backdrop")
+
+    backdrop.addEventListener("click", (e) => {
+        e.target === backdrop && body.removeChild(backdrop)
+    })
+
+    const modal = createDiv("modal checkout")
+    const price = createHeading("Total")
+    const total = createP(document.querySelector(".total").innerHTML)
+    const quantity = createHeading("Items in Cart")
+    const itemsInCart = quantities.reduce((accum, curr) => {
+        accum += +curr.innerHTML
+        return accum
+    }, 0)
+    const amount = createP(itemsInCart)
+
+    const button = createButton("Confirm Order")
+
+    modal.append(price)
+    modal.append(total)
+    modal.append(quantity)
+    modal.append(amount)
+    modal.append(button)
+
+    backdrop.append(modal)
+    body.append(backdrop)
+
+}
+
+const completeCheckout = () => {
+    console.log(body);
+    body.removeChild(document.querySelector(".modal-backdrop"))
+    cartSection.innerHTML = ""
+    localStorage.clear()
 }

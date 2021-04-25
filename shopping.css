@@ -58,7 +58,9 @@ h1 {
   height: 100%;
   padding: 1em;
   display: grid;
-  grid-template-rows: fit-content(2rem) auto fit-content(1rem);
+  grid-template-rows: fit-content(2rem) minmax(min-content, auto) fit-content(
+      1rem
+    );
 }
 
 .cart-item {
@@ -75,6 +77,10 @@ h1 {
 
 .cart-item label {
   margin-left: 1rem;
+}
+
+.cart-summary {
+  text-align: center;
 }
 
 .cart-totals {
@@ -115,6 +121,7 @@ h1 {
   padding: 1em;
   text-align: center;
   position: relative;
+  flex-grow: 1;
 }
 
 .input--wrapper,
@@ -136,6 +143,7 @@ h1 {
   width: 300px;
   height: 300px;
   object-fit: cover;
+  flex-grow: 1;
 }
 
 .special-deal {
@@ -173,7 +181,7 @@ h1 {
   width: 100%;
   text-align: center;
   transform-origin: bottom;
-  animation: grow 250ms ease forwards;
+  animation: grow 250ms ease forwards, grow 250ms ease reverse 4750ms;
 }
 
 @keyframes fade-in {

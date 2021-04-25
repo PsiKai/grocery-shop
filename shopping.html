@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="shopping.css">
 </head>
 <body>
-    <h1>Welcome</h1>
+    <h1>Today's Selection</h1>
     <div class="grid--container">
         <section class="inventory">
 
@@ -17,7 +17,7 @@
         <section class="cart-section">
             <h2>Your Cart</h2>
             <div class="cart"></div>
-            <div>
+            <div class="cart-summary">
                 <hr>
                 <div class="cart-totals">
                     <h3>Total:</h3>
@@ -27,6 +27,7 @@
                     <h3>Savings:</h3>
                     <span class="savings">$0</span>
                 </div>
+                <button onclick=openCheckout() >Checkout</button>
             </div>
             
             

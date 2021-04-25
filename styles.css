@@ -68,9 +68,10 @@ button {
   padding: 1em 3em;
   cursor: pointer;
   border: 1px solid var(--clr-text);
-  transition: all 200ms ease;
+  transition: all 700ms ease;
   position: relative;
   z-index: 1;
+  margin-top: 1rem;
 }
 
 button::after {
