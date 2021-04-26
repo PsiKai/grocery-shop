@@ -280,4 +280,6 @@ const completeCheckout = () => {
     body.removeChild(document.querySelector(".modal-backdrop"))
     cartSection.innerHTML = ""
     localStorage.clear()
+    updatePrice()
+    updateSavings()
 }
