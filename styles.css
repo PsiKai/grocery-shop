@@ -120,13 +120,16 @@ button:hover::after {
   position: relative;
   z-index: 3;
   background: inherit;
+  overflow-x: hidden;
 }
 
 .values {
   font-size: calc(2rem + 3vw);
-  padding-left: 2em;
+  padding-left: 10%;
   /* transform-style: preserve-3d; */
   transform: scale(0);
+  position: -webkit-sticky;
+  top: 50px;
 }
 
 .introduction--card {
@@ -135,12 +138,14 @@ button:hover::after {
   justify-content: space-evenly;
   flex-wrap: wrap;
   max-width: 1000px;
-  margin: 10rem auto;
+  margin: 15vh auto;
 }
 
 .img--container {
   position: relative;
-  transform: translateX(40px);
+  /* transform: translate(1000px, 175px); */
+  /* transition: transform 500ms ease; */
+  opacity: 0;
 }
 
 .img--container img {
@@ -149,6 +154,8 @@ button:hover::after {
   max-width: 100%;
   object-fit: cover;
   box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.4);
+  position: relative;
+  left: 40px;
 }
 
 .img--container h2 {
@@ -166,7 +173,13 @@ button:hover::after {
   background: #f8f5f1;
   padding: 2em 1em;
   box-shadow: 2px 2px 8px 2px rgba(0, 0, 0, 0.4);
-  transform: translate(-80px, 60px);
+  opacity: 0;
+  position: relative;
+  left: -80px;
+  top: 60px;
+  /* transform: translate(-80px, 60px); */
+  /* transform: translate(-700px, -100px);
+  transition: transform 500ms ease; */
   /* display: flex;
   align-items: center; */
 }
@@ -251,5 +264,38 @@ button:hover::after {
   }
   to {
     transform: scale(1);
+  }
+}
+
+@keyframes slide-from-left {
+  from {
+    transform: translate(300px, 100px);
+    opacity: 1;
+  }
+  to {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-from-right {
+  from {
+    transform: translate(-300px, -100px);
+    opacity: 1;
+  }
+  to {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 500px) {
+  .img--container img,
+  .introduction--card-text {
+    left: 0;
+  }
+
+  .introduction--card-text {
+    top: -32px;
   }
 }
