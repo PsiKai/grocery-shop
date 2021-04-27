@@ -14,7 +14,7 @@ To demonstrate my skills with javascript and css web development. I took a softw
 
 - Transitions
 - Animations
-- Layout with Flex and Grid
+- Layout with Flexbox and Grid
 
 #### Javascript:
 
