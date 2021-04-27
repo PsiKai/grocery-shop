@@ -10,6 +10,8 @@ let options2 = {
     threshold: 0.8
 }
 
+console.log("this is the testimonial branch")
+
 
 let valuesCallback = (entries, observer) => {
     entries.forEach(entry => {
