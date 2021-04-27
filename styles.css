@@ -189,13 +189,24 @@ button:hover::after {
   max-width: 20ch;
 }
 
+.testimonial-section {
+  padding: 2em 0;
+  background: var(--clr-medium);
+}
+
+.testimonial-section h1.reviewers {
+  text-align: center;
+  color: var(--clr-text);
+  font-size: calc(2rem + 3vw);
+  transform-origin: bottom;
+  transform: scaleY(0);
+}
+
 .testimonials {
   display: flex;
   justify-content: space-evenly;
   flex-direction: row;
   flex-wrap: wrap;
-  padding: 2em 0;
-  background: var(--clr-medium);
 }
 
 .testimonials--card {
@@ -208,6 +219,7 @@ button:hover::after {
   justify-content: center;
   align-items: center;
   text-align: center;
+  opacity: 0;
 }
 
 .testimonials--card img {
@@ -286,6 +298,15 @@ button:hover::after {
   to {
     transform: translate(0, 0);
     opacity: 1;
+  }
+}
+
+@keyframes grow-up {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
   }
 }
 
