@@ -10,7 +10,12 @@ let options2 = {
     threshold: 0.8
 }
 
+<<<<<<< HEAD
 console.log("this is the hotfix branch");
+=======
+console.log("this is the testimonial branch")
+console.log("I am back on the testimonial branch")
+>>>>>>> feature/add-testimonial-animations
 
 
 let valuesCallback = (entries, observer) => {
