@@ -18,6 +18,7 @@ console.log("I am back on the testimonial branch")
 >>>>>>> feature/add-testimonial-animations
 
 
+
 let valuesCallback = (entries, observer) => {
     entries.forEach(entry => {
         if(entry.isIntersecting === true) {
