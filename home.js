@@ -11,6 +11,7 @@ let options2 = {
 }
 
 
+
 let valuesCallback = (entries, observer) => {
     entries.forEach(entry => {
         if(entry.isIntersecting === true) {
