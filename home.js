@@ -11,6 +11,7 @@ let options2 = {
 }
 
 console.log("this is the testimonial branch")
+console.log("I am back on the testimonial branch")
 
 
 let valuesCallback = (entries, observer) => {
