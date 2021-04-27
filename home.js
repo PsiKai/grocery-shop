@@ -10,13 +10,6 @@ let options2 = {
     threshold: 0.8
 }
 
-<<<<<<< HEAD
-console.log("this is the hotfix branch");
-=======
-console.log("this is the testimonial branch")
-console.log("I am back on the testimonial branch")
->>>>>>> feature/add-testimonial-animations
-
 
 let valuesCallback = (entries, observer) => {
     entries.forEach(entry => {
@@ -85,3 +78,24 @@ const valueCardCallback = (entries) => {
 const valueCards = Array.from(document.querySelectorAll(".introduction--card"))
 const valueCard = new IntersectionObserver(valueCardCallback, options2)
 valueCards.forEach(card => valueCard.observe(card))
+
+
+const testimonialCallback = (entries) => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting) {
+            testimonialHeader.style.animation = "grow-up 500ms ease forwards"
+            // entry.target.children[0].style.animation = "fade-in 1000ms ease forwards 500ms"
+            // entry.target.children[1].style.animation = "fade-in 1000ms ease forwards 1000ms"
+            // entry.target.children[2].style.animation = "fade-in 1000ms ease forwards 1500ms"
+            testimonialCards.forEach((card, i) => {
+                card.style.animation = `fade-in 1000ms ease forwards ${i * 500 + 100}ms`
+            })
+        }
+    })
+}
+
+const testimonials = document.querySelector(".testimonials")
+const testimonialCards = Array.from(testimonials.children)
+const testimonialHeader = document.querySelector("h1.reviewers")
+const testimonialsObeserver = new IntersectionObserver(testimonialCallback, options2)
+testimonialsObeserver.observe(testimonials)
