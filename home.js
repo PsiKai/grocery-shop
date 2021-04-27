@@ -10,7 +10,11 @@ let options2 = {
     threshold: 0.8
 }
 
+<<<<<<< HEAD
 console.log("this is the hotfix branch");
+=======
+console.log("this is the testimonial branch")
+>>>>>>> 311252c... testing git 1
 
 
 let valuesCallback = (entries, observer) => {
