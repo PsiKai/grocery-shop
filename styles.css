@@ -1,10 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Sriracha&display=swap");
+
 :root {
   --clr-text: #f3f4ed;
   --clr-primary: #424642;
   --clr-medium: #536162;
   --clr-brand: #c06014;
-  --font-primary: sans-serif;
-  --font-secondary: cursive;
+  --font-primary: "Cabin", sans-serif;
+  --font-secondary: "Sriracha", cursive;
 }
 
 * {
@@ -67,6 +69,7 @@ body {
   margin-top: 0;
   animation: fade-in 1000ms ease forwards 800ms;
   opacity: 0;
+  font-weight: thin;
 }
 
 .landing-section button {
@@ -322,7 +325,6 @@ button:focus {
   .introduction {
     scroll-snap-type: y mandatory;
   }
-
   .introduction--card {
     scroll-snap-align: start;
   }
@@ -341,3 +343,13 @@ button:focus {
     right: 0;
   }
 }
+
+/* @media (max-width: 500px) {
+  .introduction {
+    scroll-snap-type: y mandatory;
+  }
+  .introduction--card {
+    height: 100vh;
+    scroll-snap-align: start;
+  }
+} */
