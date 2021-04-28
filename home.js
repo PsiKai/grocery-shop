@@ -1,3 +1,5 @@
+const body = document.querySelector("body")
+
 let options = {
     root: null,
     rootMargin: "-10% 0%",
@@ -10,45 +12,26 @@ let options2 = {
     threshold: 0.8
 }
 
+const isMobile = () => parseFloat(window.getComputedStyle(body).width) < 700
 
-let valuesCallback = (entries, observer) => {
+const animationType = (heading) => {
+    if (heading === "reviewers") return "grow-up 500ms ease forwards"
+    if (heading === "values") return "zoom-in 1000ms ease forwards"
+}
+
+
+let headingsCallback = (entries) => {
     entries.forEach(entry => {
-        if(entry.isIntersecting === true) {
-            entry.target.style.animation = "zoom-in 1000ms ease forwards"
+        if(entry.isIntersecting) {
+            const {value} = entry.target.classList
+            entry.target.style.animation = animationType(value)
         }
-        // if(entry.isVisible === false && entry.isIntersecting === false) {
-        //     entry.target.style.animation = ""
-        // }
     })
 }
 
-let values = new IntersectionObserver(valuesCallback, options);
+let headingsObserver = new IntersectionObserver(headingsCallback, options);
+headingsObserver.observe(document.querySelector(".values"))
 
-
-values.observe(document.querySelector(".values"))
-
-
-// let valueTextCallback = (entries) => {
-//     entries.forEach(entry => {
-//         if(entry.isIntersecting === true) {
-//             entry.target.style.animation = "slide-from-right 1000ms ease forwards"
-//         }
-//         if(entry.isVisible === false && entry.isIntersecting === false) {
-//             entry.target.style.animation = "fade-in 500ms ease reverse"
-//         }
-//     })
-// }
-
-// let valueImgCallback = (entries) => {
-//     entries.forEach(entry => {
-//         if(entry.isIntersecting === true) {
-//             entry.target.style.animation = "slide-from-left 1000ms ease forwards"
-//         }
-//         if(entry.isVisible === false && entry.isIntersecting === false) {
-//             entry.target.style.animation = "fade-in 500ms ease reverse"
-//         }
-//     })
-// }
 
 const valueCardCallback = (entries) => {
     entries.forEach(entry => {
@@ -56,24 +39,8 @@ const valueCardCallback = (entries) => {
             entry.target.children[0].style.animation = "slide-from-left 1000ms ease forwards"
             entry.target.children[1].style.animation = "slide-from-right 1000ms ease forwards"
         }
-        // if(entry.isVisible === false && entry.isIntersecting === false) {
-        //     var children = Array.from(entry.target.children)
-        //     children.forEach(child => {
-        //         child.style.animation = "fade-in 1500ms ease reverse"
-        //     })
-        // }
     })
 }
-
-// const valueImgs = Array.from(document.querySelectorAll(".img--container"))
-// let valueImg = new IntersectionObserver(valueImgCallback, options2)
-
-// valueImgs.forEach(img => {valueImg.observe(img)})
-
-// const valueTexts = Array.from(document.querySelectorAll(".introduction--card-text"))
-// let valueText = new IntersectionObserver(valueTextCallback, options2)
-
-// valueTexts.forEach(text => {valueText.observe(text)})
 
 const valueCards = Array.from(document.querySelectorAll(".introduction--card"))
 const valueCard = new IntersectionObserver(valueCardCallback, options2)
@@ -83,19 +50,26 @@ valueCards.forEach(card => valueCard.observe(card))
 const testimonialCallback = (entries) => {
     entries.forEach(entry => {
         if(entry.isIntersecting) {
-            testimonialHeader.style.animation = "grow-up 500ms ease forwards"
-            // entry.target.children[0].style.animation = "fade-in 1000ms ease forwards 500ms"
-            // entry.target.children[1].style.animation = "fade-in 1000ms ease forwards 1000ms"
-            // entry.target.children[2].style.animation = "fade-in 1000ms ease forwards 1500ms"
-            testimonialCards.forEach((card, i) => {
-                card.style.animation = `fade-in 1000ms ease forwards ${i * 500 + 100}ms`
-            })
+            if(!isMobile()) {
+                testimonialCards.forEach((card, i) => {
+                    card.style.animation = `fade-in 1000ms ease forwards ${i * 500 + 100}ms`
+                })
+            } else {
+                entry.target.style.animation = "fade-in 1000ms ease forwards"
+            }
         }
-    })
+    }) 
 }
+
 
 const testimonials = document.querySelector(".testimonials")
 const testimonialCards = Array.from(testimonials.children)
 const testimonialHeader = document.querySelector("h1.reviewers")
+
 const testimonialsObeserver = new IntersectionObserver(testimonialCallback, options2)
+
 testimonialsObeserver.observe(testimonials)
+headingsObserver.observe(testimonialHeader)
+testimonialCards.forEach(card => {
+    testimonialsObeserver.observe(card)
+})
