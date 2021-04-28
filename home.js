@@ -56,12 +56,12 @@ const valueCardCallback = (entries) => {
             entry.target.children[0].style.animation = "slide-from-left 1000ms ease forwards"
             entry.target.children[1].style.animation = "slide-from-right 1000ms ease forwards"
         }
-        if(entry.isVisible === false && entry.isIntersecting === false) {
-            var children = Array.from(entry.target.children)
-            children.forEach(child => {
-                child.style.animation = "fade-in 1500ms ease reverse"
-            })
-        }
+        // if(entry.isVisible === false && entry.isIntersecting === false) {
+        //     var children = Array.from(entry.target.children)
+        //     children.forEach(child => {
+        //         child.style.animation = "fade-in 1500ms ease reverse"
+        //     })
+        // }
     })
 }
 
