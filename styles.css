@@ -246,7 +246,7 @@ button:focus {
 .call-to-action {
   text-align: center;
   margin: 5rem 0;
-  padding: 5em;
+  padding: 5em 0;
 }
 
 @keyframes background-blend {
@@ -319,6 +319,14 @@ button:focus {
 }
 
 @media (max-width: 800px) {
+  .introduction {
+    scroll-snap-type: y mandatory;
+  }
+
+  .introduction--card {
+    scroll-snap-align: start;
+  }
+
   .img--container img,
   .introduction--card-text {
     left: 0;
