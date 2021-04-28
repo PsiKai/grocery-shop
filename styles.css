@@ -169,7 +169,7 @@ button:focus {
 .img--container h2 {
   position: absolute;
   top: 0;
-  right: 0;
+  right: -40px;
   font-size: 2rem;
   margin: 0;
   padding: 0.5em;
@@ -318,7 +318,7 @@ button:focus {
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 800px) {
   .img--container img,
   .introduction--card-text {
     left: 0;
@@ -326,5 +326,10 @@ button:focus {
 
   .introduction--card-text {
     top: -32px;
+    left: -10%;
+  }
+
+  .introduction--card h2 {
+    right: 0;
   }
 }
