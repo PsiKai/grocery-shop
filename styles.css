@@ -7,6 +7,7 @@
   --clr-brand: #c06014;
   --font-primary: "Cabin", sans-serif;
   --font-secondary: "Sriracha", cursive;
+  scroll-behavior: smooth;
 }
 
 * {
@@ -109,12 +110,14 @@ button::after {
   transition: transform 500ms ease;
 }
 
-button:hover {
+button:hover,
+button:focus {
   border: 1px solid var(--clr-brand);
   color: var(--clr-brand);
 }
 
-button:hover::after {
+button:hover::after,
+button:focus::after {
   transform: scaleX(1);
   transform-origin: top;
 }

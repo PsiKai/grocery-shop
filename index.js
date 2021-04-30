@@ -20,7 +20,14 @@ window.addEventListener("load", () => {
         updateSavings()
         updatePrice()
     })
-     
+})
+
+window.addEventListener("keydown", (e) => {
+    const backdrop = document.querySelector(".modal-backdrop")
+    if(e.key === "Escape") {
+        backdrop && body.removeChild(backdrop)
+        setTabIndex(true)
+    }
 })
 
 const createDiv = (klass) => {
@@ -76,14 +83,33 @@ const createButton = (text, item = null) => {
 const roundToNearestPenny = (num) => num.toFixed(2)
 // Math.round((num + Number.EPSILON) * 100) / 100
 
+const setTabIndex = (toggle) => {
+    itemCard = document.querySelectorAll(".item--container")
+    checkoutButton = document.querySelector("button")
+    link = document.querySelector("a")
+    focusableItems = [...itemCard, checkoutButton, link]
+
+    focusableItems.forEach(item => {
+        toggle ? 
+            item.setAttribute("tabindex", "1") 
+            : 
+            item.setAttribute("tabindex", "-1")  
+    })
+}
+
 
 const openModal = (foodItem) => {
     const {item, imgSrc, price} = foodItem
+    
+    setTabIndex(false)
     const backdrop = createDiv("modal-backdrop")
 
     backdrop.addEventListener("click", (e) => {
         e.target === backdrop && body.removeChild(backdrop)
+        setTabIndex(true)
     })
+
+    
 
     const modal = createDiv("modal")
     const textWrapper = createDiv("modal-text-wrapper")
@@ -96,6 +122,9 @@ const openModal = (foodItem) => {
     const input = createInput(item)
     const inputDiv = createDiv("input--wrapper")
     const button = createButton("Add to Cart", item)
+
+    // input.setAttribute("tabindex", "1") 
+    // button.setAttribute("tabindex", "1")
 
     priceDiv.append(priceLabel)
     priceDiv.append(itemPrice)
@@ -122,6 +151,13 @@ inventory.forEach(foodItem => {
     var p = createP(item, "item--description")
 
     var img = createImg(imgSrc, item)
+    
+    div.setAttribute('tabIndex', "2")
+    div.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+            if(e.target === document.activeElement) e.target.click()
+        }
+    })
     
     div.append(p)
     div.append(img)
@@ -247,6 +283,7 @@ const onSale = (item) => {
 const openCheckout = () => {
     const quantities = Array.from(document.querySelectorAll(".cart-quantity"))
     const backdrop = createDiv("modal-backdrop")
+    setTabIndex(false)
 
     backdrop.addEventListener("click", (e) => {
         e.target === backdrop && body.removeChild(backdrop)
