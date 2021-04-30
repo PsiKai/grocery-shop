@@ -2,8 +2,8 @@ const body = document.querySelector("body")
 
 let options = {
     root: null,
-    rootMargin: "-10% 0%",
-    threshold: 1
+    rootMargin: "0% 0%",
+    threshold: 0
 }
 
 let options2 = {
