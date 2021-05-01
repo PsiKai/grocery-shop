@@ -36,49 +36,6 @@ const createDiv = (klass) => {
     return div
 }
 
-const createHeading = (text, klass = "") => {
-    const heading = document.createElement("h2")
-    heading.className = klass
-    heading.innerHTML = text
-    return heading
-}
-
-const createP = (text, klass = "") => {
-    const p = document.createElement("p")
-    p.className = klass
-    p.innerHTML = text
-    return p 
-}
-
-const createImg = (src, alt) => {
-    const img = document.createElement("img")
-    img.src = src
-    img.alt = alt
-    return img
-}
-
-const createInput = (item) => {
-    const input = document.createElement("input")
-    input.type = "number"
-    input.id = item
-    return input
-}
-
-const createLabel = (text, htmlFor) => {
-    const label = document.createElement("label")
-    label.for = htmlFor
-    label.innerHTML = text
-    return label
-}
-
-const createButton = (text, item = null) => {
-    button = document.createElement("button")
-    button.innerHTML = text
-    button.addEventListener("click", () => {
-        item ? addToCart(item) : completeCheckout()
-    })
-    return button
-}
 
 const roundToNearestPenny = (num) => num.toFixed(2)
 // Math.round((num + Number.EPSILON) * 100) / 100
@@ -102,55 +59,42 @@ const openModal = (foodItem) => {
     const {item, imgSrc, price} = foodItem
     
     setTabIndex(false)
+
     const backdrop = createDiv("modal-backdrop")
+    backdrop.addEventListener("click", closeModal)
 
-    backdrop.addEventListener("click", (e) => {
-        e.target === backdrop && body.removeChild(backdrop)
-        setTabIndex(true)
-    })
+    backdrop.innerHTML = 
+        `<div class="modal">
+            <img src=${imgSrc} alt=${item} />
+            <div class="modal-text-wrapper">
+                <h2>${item}</h2>
+                <div class="price--wrapper">
+                    <label>Price: </label>
+                    <p>$${price}</p>
+                </div>
+                <div class="input--wrapper">
+                    <label>How Many?</label>
+                    <input type="number" />
+                </div>
+                <button>Add to Cart</button>
+                ${onSale(foodItem)}
+            </div>
+        </div>`
 
-    
-
-    const modal = createDiv("modal")
-    const textWrapper = createDiv("modal-text-wrapper")
-    const modalItem = createHeading(item)
-    const modalItemImg = createImg(imgSrc, item)
-    const priceDiv = createDiv("price--wrapper")
-    const priceLabel = createLabel("Price: ", item)
-    const itemPrice = createP("$" + price)
-    const quantityLabel = createLabel("How many?", item)
-    const input = createInput(item)
-    const inputDiv = createDiv("input--wrapper")
-    const button = createButton("Add to Cart", item)
-
-    // input.setAttribute("tabindex", "1") 
-    // button.setAttribute("tabindex", "1")
-
-    priceDiv.append(priceLabel)
-    priceDiv.append(itemPrice)
-
-    inputDiv.append(quantityLabel)
-    inputDiv.append(input)
-
-    textWrapper.append(modalItem)
-    textWrapper.append(priceDiv)
-    textWrapper.append(inputDiv)
-    textWrapper.append(button)
-    textWrapper.append(onSale(foodItem))
-
-    modal.append(modalItemImg)
-    modal.append(textWrapper)
-
-    backdrop.append(modal)
     body.append(backdrop)
+
+    const button = backdrop.querySelector("button")
+    button.addEventListener("click", () => {addToCart(item)})
 }
+
 
 inventory.forEach(foodItem => {
     const {item, imgSrc} = foodItem
     var div = createDiv("item--container")
-    var p = createP(item, "item--description")
 
-    var img = createImg(imgSrc, item)
+    div.innerHTML = 
+        `<p class="item--description"> ${item}</p>
+        <img src=${imgSrc} alt=${item} />`
     
     div.setAttribute('tabIndex', "2")
     div.addEventListener("keypress", (e) => {
@@ -158,9 +102,6 @@ inventory.forEach(foodItem => {
             if(e.target === document.activeElement) e.target.click()
         }
     })
-    
-    div.append(p)
-    div.append(img)
 
     div.addEventListener("click", () => openModal(foodItem))
     shoppingSection.append(div)
@@ -176,10 +117,8 @@ const generatePrice = (foodItem, amount) => {
     } else {
         price = itemData.price * amount
     }
-        
     price = roundToNearestPenny(price)
-    const itemTotal = createP(`$` + price, 'item-price')
-    return itemTotal
+    return price
 }
 
 const createCartItem = (item, amount) => {
@@ -187,23 +126,21 @@ const createCartItem = (item, amount) => {
     const alreadyInCart = currentCart.find(cartItem => cartItem.children[0].innerHTML === item)
     
     if (alreadyInCart) {
-        oldPrice = alreadyInCart.children[4]
-        alreadyInCart.children[2].innerHTML = +alreadyInCart.children[2].innerHTML + +amount
-        newPrice = generatePrice(item, +alreadyInCart.children[2].innerHTML)
-        alreadyInCart.replaceChild(newPrice, oldPrice)
+        oldPrice = alreadyInCart.querySelector(".item-price")
+        oldQuantity = alreadyInCart.querySelector(".cart-quantity")
+        newQuantity = +oldQuantity.innerHTML + +amount
+        newPrice = generatePrice(item, newQuantity)
+        oldQuantity.innerHTML = newQuantity
+        oldPrice.innerHTML = `$${newPrice}`
     } else {
         const cartItem = createDiv("cart-item")
-        const quantityLabel = createLabel("Quantity: ", item)
-        const cartItemName = createHeading(item)
-        const priceLabel = createLabel("Price: ")
-        const numberOfItems = createP(amount, "cart-quantity")
-        const price = generatePrice(item, +amount)
-
-        cartItem.append(cartItemName)
-        cartItem.append(quantityLabel)
-        cartItem.append(numberOfItems)
-        cartItem.append(priceLabel)
-        cartItem.append(price)
+        cartItem.innerHTML = 
+            `<h2>${item}</h2>
+            <label>Quantity: </label>
+            <p class="cart-quantity">${amount}</p>
+            <label>Price: </label>
+            <p class="item-price">$${generatePrice(item, +amount)}</p>
+            `
         return cartItem
     } 
 
@@ -211,9 +148,8 @@ const createCartItem = (item, amount) => {
 
 const createToast = (msg) => {
     const toast = createDiv("toast-message")
-    const toastMsg = createP(msg)
+    toast.innerHTML = `<p>${msg}</p>`
     const modal = document.querySelector(".modal")
-    toast.append(toastMsg)
     modal.append(toast)
 
     setTimeout(() => {
@@ -221,8 +157,8 @@ const createToast = (msg) => {
     }, 5000)
 }
 
-const addToCart = (item, quantity = 0) => {
 
+const addToCart = (item, quantity = 0) => {
     quantity = document.querySelector("input").value
     if (quantity <= 0) {
         createToast("Please select an amount greater than zero")
@@ -231,24 +167,22 @@ const addToCart = (item, quantity = 0) => {
 
     const cartItem = createCartItem(item, quantity)
     cartItem && cartSection.append(cartItem)
+
     var cart = JSON.parse(localStorage.getItem("cart"))
-    console.log(cart);
+
     if(cart) {
         cart = [...cart, {item, quantity}]
         localStorage.setItem("cart", JSON.stringify(cart)) 
     } else {
         cart = [{item, quantity}]
-        console.log(cart);
         localStorage.setItem("cart", JSON.stringify(cart))
     }
     
-        
-
-
     body.removeChild(document.querySelector(".modal-backdrop"))
     updatePrice()
     updateSavings()
 }
+
 
 
 const updatePrice = () => {
@@ -271,50 +205,69 @@ const updateSavings = () => {
 const onSale = (item) => {
     if(item.discount) {
         const {quantity, price} = item.discount
-        const deal = createDiv("special-deal")
-        const sale = createP(`${quantity} for <br> $${price}!`)
-        deal.append(sale)
+        const deal = 
+            `<div class="special-deal">
+                <p>${quantity} for <br> $${price}!</p>
+            </div>`
         return deal
     } else {
         return ""
     } 
 }
 
-const openCheckout = () => {
-    const quantities = Array.from(document.querySelectorAll(".cart-quantity"))
-    const backdrop = createDiv("modal-backdrop")
-    setTabIndex(false)
 
-    backdrop.addEventListener("click", (e) => {
+const closeModal = (e) => {
+    const backdrop = document.querySelector(".modal-backdrop")
+    if(e) {
         e.target === backdrop && body.removeChild(backdrop)
-    })
+    } else {
+        body.removeChild(backdrop)
+    }
+    
+    setTabIndex(true)
+}
 
-    const modal = createDiv("modal checkout")
-    const price = createHeading("Total")
-    const total = createP(document.querySelector(".total").innerHTML)
-    const quantity = createHeading("Items in Cart")
+const openCheckout = () => {
+    const total = document.querySelector(".total").innerHTML
+    const quantities = Array.from(document.querySelectorAll(".cart-quantity"))
     const itemsInCart = quantities.reduce((accum, curr) => {
-        accum += +curr.innerHTML
-        return accum
-    }, 0)
-    const amount = createP(itemsInCart)
+            accum += +curr.innerHTML
+            return accum
+        }, 0)
 
-    const button = createButton("Confirm Order")
-
-    modal.append(price)
-    modal.append(total)
-    modal.append(quantity)
-    modal.append(amount)
-    modal.append(button)
-
-    backdrop.append(modal)
-    body.append(backdrop)
-
+    const checkoutModal = createDiv("modal-backdrop")
+    checkoutModal.addEventListener("click", closeModal)
+        console.log(totalDiscounts);
+    checkoutModal.innerHTML = 
+        `<div class="modal checkout">
+            <div class="modal-text-wrapper">
+                <h2>Checkout</h2>
+                <div class="price--wrapper">
+                    <label>Total:</label>
+                    <p>${total}</p>
+                </div>
+                <div class="price--wrapper">
+                    <label>Items in Cart:</label>
+                    <p>${itemsInCart}</p>
+                </div>
+                ${totalDiscounts > 0 ?
+                    `<div class="special-deal">
+                        <p>You saved 
+                            <br> 
+                            $${roundToNearestPenny(totalDiscounts)}!</p>
+                    </div>` : ""
+                }
+            </div>
+            <button onclick=completeCheckout()>Confirm Order</button>
+        </div>`
+    
+    setTabIndex(false)
+    
+    body.append(checkoutModal)
 }
 
 const completeCheckout = () => {
-    console.log(body);
-    body.removeChild(document.querySelector(".modal-backdrop"))
+    closeModal()
     cartSection.innerHTML = ""
     localStorage.clear()
     updatePrice()
