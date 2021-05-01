@@ -104,53 +104,77 @@ const openModal = (foodItem) => {
     setTabIndex(false)
     const backdrop = createDiv("modal-backdrop")
 
-    backdrop.addEventListener("click", (e) => {
-        e.target === backdrop && body.removeChild(backdrop)
-        setTabIndex(true)
-    })
+    backdrop.addEventListener("click", closeModal)
+    // (e) => {
+    //     e.target === backdrop && body.removeChild(backdrop)
+    //     setTabIndex(true)
+    // })
 
+    backdrop.innerHTML = 
+        `<div class="modal">
+            <img src=${imgSrc} alt=${item} />
+            <div class="modal-text-wrapper">
+                <h2>${item}</h2>
+                <div class="price--wrapper">
+                    <label>Price: </label>
+                    <p>$${price}</p>
+                </div>
+                <div class="input--wrapper">
+                    <label>How Many?</label>
+                    <input type="number" />
+                </div>
+                <button>Add to Cart</button>
+                ${onSale(foodItem)}
+            </div>
+        </div>`
     
 
-    const modal = createDiv("modal")
-    const textWrapper = createDiv("modal-text-wrapper")
-    const modalItem = createHeading(item)
-    const modalItemImg = createImg(imgSrc, item)
-    const priceDiv = createDiv("price--wrapper")
-    const priceLabel = createLabel("Price: ", item)
-    const itemPrice = createP("$" + price)
-    const quantityLabel = createLabel("How many?", item)
-    const input = createInput(item)
-    const inputDiv = createDiv("input--wrapper")
-    const button = createButton("Add to Cart", item)
+    // const modal = createDiv("modal")
+    // const textWrapper = createDiv("modal-text-wrapper")
+    // const modalItem = createHeading(item)
+    // const modalItemImg = createImg(imgSrc, item)
+    // const priceDiv = createDiv("price--wrapper")
+    // const priceLabel = createLabel("Price: ", item)
+    // const itemPrice = createP("$" + price)
+    // const quantityLabel = createLabel("How many?", item)
+    // const input = createInput(item)
+    // const inputDiv = createDiv("input--wrapper")
+    // const button = createButton("Add to Cart", item)
 
     // input.setAttribute("tabindex", "1") 
     // button.setAttribute("tabindex", "1")
 
-    priceDiv.append(priceLabel)
-    priceDiv.append(itemPrice)
+    // priceDiv.append(priceLabel)
+    // priceDiv.append(itemPrice)
 
-    inputDiv.append(quantityLabel)
-    inputDiv.append(input)
+    // inputDiv.append(quantityLabel)
+    // inputDiv.append(input)
 
-    textWrapper.append(modalItem)
-    textWrapper.append(priceDiv)
-    textWrapper.append(inputDiv)
-    textWrapper.append(button)
-    textWrapper.append(onSale(foodItem))
+    // textWrapper.append(modalItem)
+    // textWrapper.append(priceDiv)
+    // textWrapper.append(inputDiv)
+    // textWrapper.append(button)
+    // textWrapper.append(onSale(foodItem))
 
-    modal.append(modalItemImg)
-    modal.append(textWrapper)
+    // modal.append(modalItemImg)
+    // modal.append(textWrapper)
 
-    backdrop.append(modal)
+    // backdrop.append(modal)
     body.append(backdrop)
+    const button = backdrop.querySelector("button")
+    button.addEventListener("click", () => {addToCart(item)})
 }
 
 inventory.forEach(foodItem => {
     const {item, imgSrc} = foodItem
     var div = createDiv("item--container")
-    var p = createP(item, "item--description")
 
-    var img = createImg(imgSrc, item)
+    div.innerHTML = 
+        `<p class="item--description"> ${item}</p>
+        <img src=${imgSrc} alt=${item} />`
+    // var p = createP(item, "item--description")
+
+    // var img = createImg(imgSrc, item)
     
     div.setAttribute('tabIndex', "2")
     div.addEventListener("keypress", (e) => {
@@ -158,9 +182,9 @@ inventory.forEach(foodItem => {
             if(e.target === document.activeElement) e.target.click()
         }
     })
-    
-    div.append(p)
-    div.append(img)
+
+    // div.append(p)
+    // div.append(img)
 
     div.addEventListener("click", () => openModal(foodItem))
     shoppingSection.append(div)
@@ -193,16 +217,22 @@ const createCartItem = (item, amount) => {
         alreadyInCart.replaceChild(newPrice, oldPrice)
     } else {
         const cartItem = createDiv("cart-item")
-        const quantityLabel = createLabel("Quantity: ", item)
-        const cartItemName = createHeading(item)
-        const priceLabel = createLabel("Price: ")
-        const numberOfItems = createP(amount, "cart-quantity")
+        cartItem.innerHTML = 
+            `<h2>${item}</h2>
+            <label>Quantity: </label>
+            <p class="cart-quantity">${amount}</p>
+            <label>Price: </label>
+            `
+        // const quantityLabel = createLabel("Quantity: ", item)
+        // const cartItemName = createHeading(item)
+        // const priceLabel = createLabel("Price: ")
+        // const numberOfItems = createP(amount, "cart-quantity")
         const price = generatePrice(item, +amount)
 
-        cartItem.append(cartItemName)
-        cartItem.append(quantityLabel)
-        cartItem.append(numberOfItems)
-        cartItem.append(priceLabel)
+        // cartItem.append(cartItemName)
+        // cartItem.append(quantityLabel)
+        // cartItem.append(numberOfItems)
+        // cartItem.append(priceLabel)
         cartItem.append(price)
         return cartItem
     } 
@@ -211,15 +241,17 @@ const createCartItem = (item, amount) => {
 
 const createToast = (msg) => {
     const toast = createDiv("toast-message")
-    const toastMsg = createP(msg)
+    toast.innerHTML = `<p>${msg}</p>`
+    // const toastMsg = createP(msg)
     const modal = document.querySelector(".modal")
-    toast.append(toastMsg)
+    // toast.append(toastMsg)
     modal.append(toast)
 
     setTimeout(() => {
         modal.removeChild(toast)
     }, 5000)
 }
+
 
 const addToCart = (item, quantity = 0) => {
 
@@ -242,13 +274,11 @@ const addToCart = (item, quantity = 0) => {
         localStorage.setItem("cart", JSON.stringify(cart))
     }
     
-        
-
-
     body.removeChild(document.querySelector(".modal-backdrop"))
     updatePrice()
     updateSavings()
 }
+
 
 
 const updatePrice = () => {
@@ -271,9 +301,13 @@ const updateSavings = () => {
 const onSale = (item) => {
     if(item.discount) {
         const {quantity, price} = item.discount
-        const deal = createDiv("special-deal")
-        const sale = createP(`${quantity} for <br> $${price}!`)
-        deal.append(sale)
+        // const deal = createDiv("special-deal")
+        const deal = 
+            `<div class="special-deal">
+                <p>${quantity} for <br> $${price}!</p>
+            </div>`
+        // const sale = createP(`${quantity} for <br> $${price}!`)
+        // deal.append(sale)
         return deal
     } else {
         return ""
@@ -315,6 +349,7 @@ const onSale = (item) => {
 const closeModal = (e) => {
     const backdrop = document.querySelector(".modal-backdrop")
     e.target === backdrop && body.removeChild(backdrop)
+    setTabIndex(true)
 }
 
 const openCheckout = () => {
@@ -327,10 +362,11 @@ const openCheckout = () => {
 
     const checkoutModal = createDiv("modal-backdrop")
     checkoutModal.addEventListener("click", closeModal)
-
+        console.log(totalDiscounts);
     checkoutModal.innerHTML = 
         `<div class="modal checkout">
             <div class="modal-text-wrapper">
+                <h2>Checkout</h2>
                 <div class="price--wrapper">
                     <label>Total:</label>
                     <p>${total}</p>
@@ -339,15 +375,15 @@ const openCheckout = () => {
                     <label>Items in Cart:</label>
                     <p>${itemsInCart}</p>
                 </div>
-                <div class="special-deal">
-                    ${totalDiscounts > 0 && 
-                        `<p>You saved 
+                ${totalDiscounts > 0 ?
+                    `<div class="special-deal">
+                        <p>You saved 
                             <br> 
-                            $${roundToNearestPenny(totalDiscounts)}!</p>`}
-                </div>
+                            $${roundToNearestPenny(totalDiscounts)}!</p>
+                    </div>` : ""
+                }
             </div>
             <button onclick=completeCheckout()>Confirm Order</button>
-            
         </div>`
     
     setTabIndex(false)
