@@ -280,36 +280,79 @@ const onSale = (item) => {
     } 
 }
 
+// const openCheckout = () => {
+//     const quantities = Array.from(document.querySelectorAll(".cart-quantity"))
+//     const backdrop = createDiv("modal-backdrop")
+//     setTabIndex(false)
+
+//     backdrop.addEventListener("click", (e) => {
+//         e.target === backdrop && body.removeChild(backdrop)
+//     })
+
+//     const modal = createDiv("modal checkout")
+//     const price = createHeading("Total")
+//     const total = createP(document.querySelector(".total").innerHTML)
+//     const quantity = createHeading("Items in Cart")
+//     const itemsInCart = quantities.reduce((accum, curr) => {
+//         accum += +curr.innerHTML
+//         return accum
+//     }, 0)
+//     const amount = createP(itemsInCart)
+
+//     const button = createButton("Confirm Order")
+
+//     modal.append(price)
+//     modal.append(total)
+//     modal.append(quantity)
+//     modal.append(amount)
+//     modal.append(button)
+
+//     backdrop.append(modal)
+//     body.append(backdrop)
+
+// }
+
+const closeModal = (e) => {
+    const backdrop = document.querySelector(".modal-backdrop")
+    e.target === backdrop && body.removeChild(backdrop)
+}
+
 const openCheckout = () => {
+    const total = document.querySelector(".total").innerHTML
     const quantities = Array.from(document.querySelectorAll(".cart-quantity"))
-    const backdrop = createDiv("modal-backdrop")
-    setTabIndex(false)
-
-    backdrop.addEventListener("click", (e) => {
-        e.target === backdrop && body.removeChild(backdrop)
-    })
-
-    const modal = createDiv("modal checkout")
-    const price = createHeading("Total")
-    const total = createP(document.querySelector(".total").innerHTML)
-    const quantity = createHeading("Items in Cart")
     const itemsInCart = quantities.reduce((accum, curr) => {
-        accum += +curr.innerHTML
-        return accum
-    }, 0)
-    const amount = createP(itemsInCart)
+            accum += +curr.innerHTML
+            return accum
+        }, 0)
 
-    const button = createButton("Confirm Order")
+    const checkoutModal = createDiv("modal-backdrop")
+    checkoutModal.addEventListener("click", closeModal)
 
-    modal.append(price)
-    modal.append(total)
-    modal.append(quantity)
-    modal.append(amount)
-    modal.append(button)
-
-    backdrop.append(modal)
-    body.append(backdrop)
-
+    checkoutModal.innerHTML = 
+        `<div class="modal checkout">
+            <div class="modal-text-wrapper">
+                <div class="price--wrapper">
+                    <label>Total:</label>
+                    <p>${total}</p>
+                </div>
+                <div class="price--wrapper">
+                    <label>Items in Cart:</label>
+                    <p>${itemsInCart}</p>
+                </div>
+                <div class="special-deal">
+                    ${totalDiscounts > 0 && 
+                        `<p>You saved 
+                            <br> 
+                            $${roundToNearestPenny(totalDiscounts)}!</p>`}
+                </div>
+            </div>
+            <button onclick=completeCheckout()>Confirm Order</button>
+            
+        </div>`
+    
+    setTabIndex(false)
+    
+    body.append(checkoutModal)
 }
 
 const completeCheckout = () => {

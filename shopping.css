@@ -143,11 +143,20 @@ h1 {
   font-size: 1.2rem;
 }
 
+.price--wrapper p {
+  text-align: right;
+}
+
 .modal img {
   width: 300px;
   height: 300px;
   object-fit: cover;
   flex-grow: 1;
+}
+
+.modal.checkout {
+  flex-direction: column;
+  padding: 2em;
 }
 
 .special-deal {
@@ -174,6 +183,11 @@ h1 {
 .special-deal p {
   margin: 0;
   color: var(--clr-text);
+}
+
+.checkout .special-deal {
+  top: 0;
+  left: 0;
 }
 
 .toast-message {
