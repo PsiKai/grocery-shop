@@ -2,13 +2,13 @@ const body = document.querySelector("body")
 
 let options = {
     root: null,
-    rootMargin: "0% 0%",
-    threshold: 0
+    rootMargin: "0% 0% -20% 0%",
+    threshold: 1
 }
 
 let options2 = {
     root: null,
-    rootMargin: "-10% 0%",
+    rootMargin: "0% 0% -10% 0%",
     threshold: 0.8
 }
 
@@ -37,7 +37,7 @@ const valueCardCallback = (entries) => {
     entries.forEach(entry => {
         if(entry.isIntersecting === true) {
             entry.target.children[0].style.animation = "slide-from-left 1000ms ease forwards"
-            entry.target.children[1].style.animation = "slide-from-right 1000ms ease forwards"
+            entry.target.children[1].style.animation = "slide-from-right 1000ms ease forwards 1200ms"
         }
     })
 }
