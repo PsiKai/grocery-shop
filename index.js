@@ -74,7 +74,7 @@ const openModal = (foodItem) => {
                 </div>
                 <div class="input--wrapper">
                     <label>How Many?</label>
-                    <input type="number" />
+                    <input type="number" inputmode="numeric" pattern="[0-9]*"/>
                 </div>
                 <button>Add to Cart</button>
                 ${onSale(foodItem)}
