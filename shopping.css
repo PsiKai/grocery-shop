@@ -54,6 +54,26 @@ nav {
   left: 2rem;
 }
 
+nav a {
+  text-decoration: none;
+  background: inherit;
+  color: var(--clr-primary);
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  box-shadow: 0 0 16px 2px rgba(0, 0, 0, 0.4);
+
+  display: grid;
+  place-items: center;
+  transition: all 150ms ease;
+}
+
+nav:hover a,
+nav:focus a {
+  box-shadow: 0 0 24px 4px rgba(0, 0, 0, 0.3);
+  transform: translateY(-3px);
+}
+
 h1 {
   text-align: center;
   color: var(--clr-text);
@@ -81,10 +101,10 @@ h1 {
 }
 
 .item--container {
-  margin: 1rem;
+  margin: 0.5rem;
   text-align: center;
   cursor: pointer;
-  padding: 1rem;
+  padding: 0.5rem;
   border-radius: 0.25rem;
   box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.4);
   transition: all 200ms ease;
@@ -124,18 +144,26 @@ h1 {
 }
 
 .cart {
-  max-height: 50vh;
+  max-height: 45vh;
   overflow-y: auto;
   scrollbar-width: thin;
+  padding-right: 10px;
+  margin-right: -10px;
 }
 
 .cart::-webkit-scrollbar {
   width: 5px;
 }
 
+.cart::-webkit-scrollbar-thumb {
+  background-color: var(--clr-text);
+}
+
+.cart::-webkit-scrollbar-track {
+  background-color: var(--clr-medium);
+}
+
 .cart-item {
-  /* padding: 1em 0; */
-  /* text-align: right; */
   transform-origin: top;
   animation: grow 250ms ease forwards;
 }

@@ -43,7 +43,7 @@ const inventory = [
         price: 2.49, 
         discount: {
             quantity: 2, 
-            price: 3.99
+            price: 1.99
         }
     }
 ]
