@@ -11,6 +11,9 @@
 const shoppingSection = document.querySelector(".inventory")
 const cartSection = document.querySelector(".cart")
 const body = document.querySelector("body")
+const cartIcon = document.querySelector(".fa-shopping-cart")
+const cartContainer = document.querySelector(".cart--container")
+let cartCount = 0
 let totalDiscounts = 0
 
 window.addEventListener("load", () => {
@@ -29,6 +32,10 @@ window.addEventListener("keydown", (e) => {
         backdrop && body.removeChild(backdrop)
         setTabIndex(true)
     }
+})
+
+cartIcon.addEventListener("click", () => {
+    cartContainer.classList.toggle("cart--expand")
 })
 
 const createDiv = (klass) => {
@@ -74,7 +81,7 @@ const openModal = (foodItem) => {
                 </div>
                 <div class="input--wrapper">
                     <label>How Many?</label>
-                    <input type="number" />
+                    <input type="number" inputmode="numeric" pattern="[0-9]*"/>
                 </div>
                 <button>Add to Cart</button>
                 ${onSale(foodItem)}
@@ -88,7 +95,7 @@ const openModal = (foodItem) => {
 }
 
 
-inventory.forEach(foodItem => {
+inventory.forEach((foodItem, i) => {
     const {item, imgSrc} = foodItem
     var div = createDiv("item--container")
 
@@ -102,10 +109,11 @@ inventory.forEach(foodItem => {
             if(e.target === document.activeElement) e.target.click()
         }
     })
-
+    div.style.animation = `fade-in 500ms ease forwards ${2200 + (i * 100)}ms`
     div.addEventListener("click", () => openModal(foodItem))
     shoppingSection.append(div)
 })
+
 
 const generatePrice = (foodItem, amount) => {
     const itemData = inventory.find(food => food.item === foodItem)
@@ -121,9 +129,15 @@ const generatePrice = (foodItem, amount) => {
     return price
 }
 
+
 const createCartItem = (item, amount) => {
     let currentCart = Array.from(document.querySelectorAll(".cart-item"));
     const alreadyInCart = currentCart.find(cartItem => cartItem.children[0].innerHTML === item)
+    cartCount += +amount
+    cartIcon.innerHTML = 
+        `<div class="count--container">
+            <span class="cart-count">${cartCount}</span>
+        </div>`
     
     if (alreadyInCart) {
         oldPrice = alreadyInCart.querySelector(".item-price")

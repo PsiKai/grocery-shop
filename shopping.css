@@ -75,7 +75,7 @@ nav {
 
 nav a {
   text-decoration: none;
-  background: inherit;
+  background: var(--clr-text);
   color: var(--clr-primary);
   height: 50px;
   width: 50px;
@@ -109,6 +109,7 @@ h1 {
   max-width: 1000px;
   margin: -20vh auto 0;
   display: grid;
+  grid-auto-flow: dense;
   grid-template-columns: auto 250px;
   box-shadow: 0 0 16px 4px rgba(0, 0, 0, 0.4);
   background: inherit;
@@ -116,7 +117,7 @@ h1 {
   transform: translateY(500px);
   opacity: 0;
   animation: slide-up 500ms ease forwards 1700ms,
-    fade-in 500ms ease forwards 1700ms;
+    fade-in 300ms ease forwards 1700ms;
   z-index: 2;
 }
 
@@ -135,6 +136,7 @@ h1 {
   padding: 0.5rem;
   border-radius: 0.25rem;
   box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.4);
+  opacity: 0;
   transition: all 200ms ease;
 }
 
@@ -156,10 +158,14 @@ h1 {
 }
 
 .cart-section {
-  text-align: right;
+  grid-column: 2;
   position: sticky;
   top: 2rem;
-  grid-column: 2;
+}
+
+.cart--container {
+  text-align: right;
+
   background: var(--clr-primary);
   color: var(--clr-text);
   height: min-content;
@@ -177,6 +183,37 @@ h1 {
   scrollbar-width: thin;
   padding-right: 10px;
   margin-right: -10px;
+}
+
+.icon--container {
+  background: var(--clr-primary);
+  color: var(--clr-text);
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+
+.count--container {
+  position: absolute;
+  bottom: 1rem;
+  left: 28px;
+  opacity: 0;
+  margin: 0;
+  padding: 0.25rem;
+  display: grid;
+  place-items: center;
+  animation: fade-in 200ms ease forwards 500ms;
+  background: var(--clr-brand);
+  color: var(--clr-primary);
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+}
+
+.cart-count {
+  font-family: var(--font-primary);
+  font-weight: 300;
+  font-size: 1rem;
 }
 
 .cart::-webkit-scrollbar {
@@ -277,6 +314,7 @@ h1 {
   object-fit: cover;
   flex-grow: 1;
   max-width: 100%;
+  max-height: 30vh;
 }
 
 .modal.checkout {
@@ -318,7 +356,6 @@ h1 {
 .toast-message {
   position: absolute;
   top: 100%;
-  /* top: -17%; */
   z-index: 101;
   background: var(--clr-text);
   color: var(--clr-brand);
@@ -371,6 +408,78 @@ h1 {
     transform: translateY(500px);
   }
   to {
+    transform: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .grid--container {
+    padding: 1rem;
+  }
+
+  .inventory {
+    flex: 0 1 40%;
+    justify-content: space-evenly;
+  }
+
+  .item--container {
+    margin: 0.5rem 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .grid--container {
+    height: fit-content;
+    display: block;
+    padding: 1rem 0;
+  }
+
+  .inventory {
+    grid-column: none;
+  }
+
+  .cart-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4rem;
+    z-index: 15;
+    background: var(--clr-primary);
+    opacity: 0;
+    animation: fade-in 400ms ease forwards 2200ms;
+  }
+
+  .cart--container {
+    position: relative;
+    transform-origin: top;
+    transform: translateY(-100%);
+    transition: transform 400ms ease;
+    z-index: -1;
+  }
+
+  .cart--expand {
     transform: translateY(0);
+  }
+
+  nav {
+    bottom: 1rem;
+    left: 1rem;
+  }
+
+  .icon--container {
+    position: relative;
+    z-index: 1;
+    text-align: right;
+    width: 100vw;
+    top: unset;
+    height: 4rem;
+    left: unset;
+  }
+
+  .fa-shopping-cart {
+    position: relative;
+    top: 1rem;
+    right: 2rem;
   }
 }
