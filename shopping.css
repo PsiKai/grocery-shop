@@ -75,7 +75,7 @@ nav {
 
 nav a {
   text-decoration: none;
-  background: inherit;
+  background: var(--clr-text);
   color: var(--clr-primary);
   height: 50px;
   width: 50px;
@@ -116,7 +116,7 @@ h1 {
   transform: translateY(500px);
   opacity: 0;
   animation: slide-up 500ms ease forwards 1700ms,
-    fade-in 500ms ease forwards 1700ms;
+    fade-in 300ms ease forwards 1700ms;
   z-index: 2;
 }
 
