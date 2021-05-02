@@ -58,7 +58,6 @@ const setTabIndex = (toggle) => {
 
 const openModal = (foodItem) => {
     const {item, imgSrc, price} = foodItem
-    
     setTabIndex(false)
 
     const backdrop = createDiv("modal-backdrop")
@@ -68,7 +67,7 @@ const openModal = (foodItem) => {
         `<div class="modal">
             <img src=${imgSrc} alt=${item} />
             <div class="modal-text-wrapper">
-                <h2>${item}</h2>
+                <h3>${item}</h3>
                 <div class="price--wrapper">
                     <label>Price: </label>
                     <p>$${price}</p>
@@ -136,7 +135,7 @@ const createCartItem = (item, amount) => {
     } else {
         const cartItem = createDiv("cart-item")
         cartItem.innerHTML = 
-            `<h2>${item}</h2>
+            `<h3>${item}</h3>
             <label>Quantity: </label>
             <p class="cart-quantity">${amount}</p>
             <label>Price: </label>
@@ -216,7 +215,7 @@ const onSale = (item) => {
         const {quantity, price} = item.discount
         const deal = 
             `<div class="special-deal">
-                <p>${quantity} for <br> $${price}!</p>
+                <p>${quantity} for <br> $${price.toFixed(2)}!</p>
             </div>`
         return deal
     } else {
@@ -249,7 +248,7 @@ const openCheckout = () => {
     checkoutModal.innerHTML = 
         `<div class="modal checkout">
             <div class="modal-text-wrapper">
-                <h2>Checkout</h2>
+                <h3>Checkout</h3>
                 <div class="price--wrapper">
                     <label>Total:</label>
                     <p>${total}</p>

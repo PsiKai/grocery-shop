@@ -36,5 +36,14 @@ const inventory = [
         item: "Celery", 
         imgSrc: "./images/celery.jpg", 
         price: .99
+    },
+    {
+        item: "Baguette", 
+        imgSrc: "./images/baguette.jpg", 
+        price: 2.49, 
+        discount: {
+            quantity: 2, 
+            price: 3.99
+        }
     }
 ]
