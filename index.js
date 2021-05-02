@@ -189,18 +189,26 @@ const addToCart = (item, quantity = 0) => {
 const updatePrice = () => {
     const cartPrices = Array.from(document.querySelectorAll(".item-price"))
     let total = document.querySelector(".total")
-    newTotal = cartPrices.reduce((accum, curr) => {
+    const newTotal = cartPrices.reduce((accum, curr) => {
         const price = curr.innerHTML.slice(1)
         accum += +price
         return accum
     }, 0)
-
-    total.innerHTML = "$" + roundToNearestPenny(newTotal)
+    newTotal ?
+        total.innerHTML = "$" + roundToNearestPenny(newTotal)
+        :
+        total.innerHTML = "$0"
 }
 
 const updateSavings = () => {
     const savings = document.querySelector(".savings")
     if(totalDiscounts) savings.innerHTML = "$" + roundToNearestPenny(totalDiscounts)
+}
+
+const resetDiscount = () => {
+    const savings = document.querySelector(".savings")
+    savings.innerHTML = "$0"
+    totalDiscounts = 0
 }
 
 const onSale = (item) => {
@@ -238,7 +246,6 @@ const openCheckout = () => {
 
     const checkoutModal = createDiv("modal-backdrop")
     checkoutModal.addEventListener("click", closeModal)
-        console.log(totalDiscounts);
     checkoutModal.innerHTML = 
         `<div class="modal checkout">
             <div class="modal-text-wrapper">
@@ -272,5 +279,5 @@ const completeCheckout = () => {
     cartSection.innerHTML = ""
     localStorage.clear()
     updatePrice()
-    updateSavings()
+    resetDiscount()
 }
