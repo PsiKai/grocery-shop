@@ -14,26 +14,32 @@
         <h1>Today's Selection</h1>
     </section>
     <div class="grid--container">
-        <section class="inventory">
-
-        </section>
+        
         <section class="cart-section">
-            <h2>Your Cart</h2>
-            <div class="cart"></div>
-            <div class="cart-summary">
-                <hr>
-                <div class="cart-totals">
-                    <h3>Total:</h3>
-                    <span class="total">$0</span>
+            <div class="cart--container">
+                <i class="fas fa-shopping-cart fa-2x">
+                </i>
+
+
+                <h2>Your Cart</h2>
+                <div class="cart"></div>
+                <div class="cart-summary">
+                    <hr>
+                    <div class="cart-totals">
+                        <h3>Total:</h3>
+                        <span class="total">$0</span>
+                    </div>
+                    <div class="cart-totals">
+                        <h3>Savings:</h3>
+                        <span class="savings">$0</span>
+                    </div>
+                    <button onclick=openCheckout() >Checkout</button>
                 </div>
-                <div class="cart-totals">
-                    <h3>Savings:</h3>
-                    <span class="savings">$0</span>
-                </div>
-                <button onclick=openCheckout() >Checkout</button>
             </div>
             
-            
+        </section>
+        <section class="inventory">
+
         </section>
     </div>
     <nav>
