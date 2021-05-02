@@ -9,15 +9,115 @@
   --font-secondary: "Sriracha", cursive;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: var(--clr-text) var(--clr-medium);
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--clr-medium);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--clr-text);
+}
+
+body {
+  display: grid;
+  height: 100%;
+  grid-template-rows: min-content auto;
+  grid-template-areas: "header" "body";
+}
+
+.header {
+  grid-area: header;
+  height: 70vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: black;
+  z-index: 1;
+}
+
+.header::before {
+  box-sizing: border-box;
+  content: "";
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url(images/selection.png);
+  background-position: center;
+  opacity: 0;
+  filter: blur(10px) brightness(0);
+  z-index: -1;
+  animation: background-blend 700ms ease forwards;
+}
+
+nav {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  z-index: 10;
+}
+
+nav a {
+  text-decoration: none;
+  background: inherit;
+  color: var(--clr-primary);
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  box-shadow: 0 0 16px 2px rgba(0, 0, 0, 0.4);
+  /* transform: none; */
+  display: grid;
+  place-items: center;
+  transition: all 200ms ease;
+}
+
+nav:hover a,
+nav:focus a {
+  box-shadow: 0 0 24px 4px rgba(0, 0, 0, 0.3);
+  transform: translateY(-3px);
+}
+
 h1 {
   text-align: center;
+  color: var(--clr-text);
+  font-size: calc(1.5rem + 5vw);
+  opacity: 0;
+  animation: fade-in 900ms ease forwards 700ms;
 }
 
 .grid--container {
+  grid-area: body;
+  /* height: 100%; */
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
   max-width: 1000px;
-  margin: 0 auto;
+  margin: -20vh auto 0;
   display: grid;
   grid-template-columns: auto 250px;
+  box-shadow: 0 0 16px 4px rgba(0, 0, 0, 0.4);
+  background: inherit;
+  padding: 2em;
+  transform: translateY(500px);
+  opacity: 0;
+  animation: slide-up 500ms ease forwards 1700ms,
+    fade-in 500ms ease forwards 1700ms;
+  z-index: 2;
 }
 
 .inventory {
@@ -29,10 +129,10 @@ h1 {
 }
 
 .item--container {
-  margin: 1rem;
+  margin: 0.5rem;
   text-align: center;
   cursor: pointer;
-  padding: 1rem;
+  padding: 0.5rem;
   border-radius: 0.25rem;
   box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.4);
   transition: all 200ms ease;
@@ -56,10 +156,14 @@ h1 {
 }
 
 .cart-section {
+  text-align: right;
+  position: sticky;
+  top: 2rem;
   grid-column: 2;
   background: var(--clr-primary);
   color: var(--clr-text);
-  height: 100%;
+  height: min-content;
+  /* max-height: 80vh; */
   padding: 1em;
   display: grid;
   grid-template-rows: fit-content(2rem) minmax(min-content, auto) fit-content(
@@ -67,9 +171,27 @@ h1 {
     );
 }
 
+.cart {
+  max-height: 45vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding-right: 10px;
+  margin-right: -10px;
+}
+
+.cart::-webkit-scrollbar {
+  width: 5px;
+}
+
+.cart::-webkit-scrollbar-thumb {
+  background-color: var(--clr-text);
+}
+
+.cart::-webkit-scrollbar-track {
+  background-color: var(--clr-medium);
+}
+
 .cart-item {
-  /* padding: 1em 0; */
-  text-align: right;
   transform-origin: top;
   animation: grow 250ms ease forwards;
 }
@@ -91,7 +213,7 @@ h1 {
   text-align: right;
 }
 
-.cart-section h3 {
+.cart-totals h3 {
   display: inline-block;
   margin: 0.5rem 0;
 }
@@ -108,6 +230,7 @@ h1 {
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
   animation: fade-in 200ms ease forwards;
+  opacity: 0;
 }
 
 .modal {
@@ -116,6 +239,7 @@ h1 {
   flex-wrap: wrap;
   position: relative;
   animation: modal-slide 200ms ease forwards;
+  max-width: 95vw;
 }
 
 .modal-text-wrapper {
@@ -152,6 +276,7 @@ h1 {
   height: 300px;
   object-fit: cover;
   flex-grow: 1;
+  max-width: 100%;
 }
 
 .modal.checkout {
@@ -192,14 +317,26 @@ h1 {
 
 .toast-message {
   position: absolute;
-  top: -17%;
+  top: 100%;
+  /* top: -17%; */
   z-index: 101;
   background: var(--clr-text);
   color: var(--clr-brand);
   width: 100%;
   text-align: center;
-  transform-origin: bottom;
+  transform-origin: top;
   animation: grow 250ms ease forwards, grow 250ms ease reverse 4750ms;
+}
+
+@keyframes background-blend {
+  from {
+    filter: blur(10px) brightness(0);
+    opacity: 0;
+  }
+  to {
+    filter: blur(0) brightness(0.5);
+    opacity: 1;
+  }
 }
 
 @keyframes fade-in {
@@ -226,5 +363,14 @@ h1 {
   }
   to {
     transform: scaleY(1);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(500px);
+  }
+  to {
+    transform: translateY(0);
   }
 }
