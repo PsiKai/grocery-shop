@@ -12,6 +12,7 @@ const shoppingSection = document.querySelector(".inventory")
 const cartSection = document.querySelector(".cart")
 const body = document.querySelector("body")
 const cartIcon = document.querySelector(".fa-shopping-cart")
+const cartContainer = document.querySelector(".cart--container")
 let cartCount = 0
 let totalDiscounts = 0
 
@@ -31,6 +32,10 @@ window.addEventListener("keydown", (e) => {
         backdrop && body.removeChild(backdrop)
         setTabIndex(true)
     }
+})
+
+cartIcon.addEventListener("click", () => {
+    cartContainer.classList.toggle("cart--expand")
 })
 
 const createDiv = (klass) => {
