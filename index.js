@@ -215,7 +215,7 @@ const onSale = (item) => {
         const {quantity, price} = item.discount
         const deal = 
             `<div class="special-deal">
-                <p>${quantity} for <br> $${price.toFixed(2) * 2}!</p>
+                <p>${quantity} for <br> $${price.toFixed(2) * quantity}!</p>
             </div>`
         return deal
     } else {
@@ -280,3 +280,8 @@ const completeCheckout = () => {
     updatePrice()
     resetDiscount()
 }
+
+// body.style.overflowY = "hidden"
+// setTimeout(() => {
+//     body.style.overflowY = "initial"
+// }, 2200)
