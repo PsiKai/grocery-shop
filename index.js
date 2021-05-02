@@ -293,6 +293,9 @@ const completeCheckout = () => {
     localStorage.clear()
     updatePrice()
     resetDiscount()
+    cartCount = 0 
+    const countContainer = document.querySelector(".count--container")
+    cartIcon.removeChild(countContainer)
 }
 
 // body.style.overflowY = "hidden"
