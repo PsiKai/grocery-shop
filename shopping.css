@@ -440,7 +440,8 @@ h1 {
 
   .cart-section {
     position: fixed;
-    top: 0;
+    top: unset;
+    bottom: calc(100vh - 4rem);
     left: 0;
     width: 100%;
     height: 4rem;
