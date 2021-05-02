@@ -314,6 +314,7 @@ h1 {
   object-fit: cover;
   flex-grow: 1;
   max-width: 100%;
+  max-height: 30vh;
 }
 
 .modal.checkout {
@@ -355,7 +356,6 @@ h1 {
 .toast-message {
   position: absolute;
   top: 100%;
-  /* top: -17%; */
   z-index: 101;
   background: var(--clr-text);
   color: var(--clr-brand);
@@ -412,30 +412,30 @@ h1 {
   }
 }
 
-@media (max-width: 500px) {
-  /* body {
-    overflow-x: hidden;
-    width: 100vw; */
-  /* } */
-
+@media (max-width: 700px) {
   .grid--container {
-    height: fit-content;
-    display: block;
-    /* padding: 0;
-    grid-template-columns: none;
-    grid-template-rows: fit-content(2rem) auto; */
-    /* padding: 0; */
-    /* z-index: 2; */
-    /* position: sticky; */
-    /* overflow-y: hidden; */
-    /* opacity: 1; */
+    padding: 1rem;
   }
 
   .inventory {
-    justify-content: space-evenly;
-    /* grid-row: 1; */
-    grid-column: none;
     flex: 0 1 40%;
+    justify-content: space-evenly;
+  }
+
+  .item--container {
+    margin: 0.5rem 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .grid--container {
+    height: fit-content;
+    display: block;
+    padding: 1rem 0;
+  }
+
+  .inventory {
+    grid-column: none;
   }
 
   .cart-section {
