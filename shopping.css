@@ -177,6 +177,11 @@ h1 {
     );
 }
 
+.cart--container h2 {
+  font-size: 2.1rem;
+  margin: 1rem 0;
+}
+
 .cart {
   max-height: 45vh;
   overflow-y: auto;
@@ -197,12 +202,13 @@ h1 {
   position: absolute;
   bottom: 1rem;
   left: 28px;
-  opacity: 0;
+  /* opacity: 0; */
   margin: 0;
   padding: 0.25rem;
   display: grid;
   place-items: center;
-  animation: fade-in 200ms ease forwards 500ms;
+  transform: scale(0);
+  animation: grow-out 200ms ease forwards 200ms;
   background: var(--clr-brand);
   color: var(--clr-primary);
   border-radius: 50%;
@@ -233,9 +239,19 @@ h1 {
   animation: grow 250ms ease forwards;
 }
 
+.cart-item h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.9rem;
+}
+
+.cart-item label {
+  opacity: 0.8;
+}
+
 .cart-item p {
   display: inline-block;
   margin: 0;
+  font-size: 1.1rem;
 }
 
 .cart-item label {
@@ -248,11 +264,20 @@ h1 {
 
 .cart-totals {
   text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
 }
 
 .cart-totals h3 {
   display: inline-block;
   margin: 0.5rem 0;
+  font-size: 1.4rem;
+}
+
+.cart-totals > span {
+  font-size: 1.1rem;
 }
 
 .modal-backdrop {
@@ -289,6 +314,11 @@ h1 {
   flex-grow: 1;
 }
 
+.modal-text-wrapper h2 {
+  font-size: 2rem;
+  margin: 1rem 0;
+}
+
 .input--wrapper,
 .price--wrapper {
   display: flex;
@@ -302,6 +332,10 @@ h1 {
   margin-left: 0.5rem;
   width: 50px;
   font-size: 1.2rem;
+}
+
+.modal-text-wrapper label {
+  opacity: 0.8;
 }
 
 .price--wrapper p {
@@ -400,6 +434,15 @@ h1 {
   }
   to {
     transform: scaleY(1);
+  }
+}
+
+@keyframes grow-out {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
   }
 }
 

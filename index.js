@@ -74,7 +74,7 @@ const openModal = (foodItem) => {
         `<div class="modal">
             <img src=${imgSrc} alt=${item} />
             <div class="modal-text-wrapper">
-                <h3>${item}</h3>
+                <h2>${item}</h2>
                 <div class="price--wrapper">
                     <label>Price: </label>
                     <p>$${price}</p>
