@@ -1,3 +1,6 @@
+console.log("O HAI THERE");
+
+
 const body = document.querySelector("body")
 
 let options = {
