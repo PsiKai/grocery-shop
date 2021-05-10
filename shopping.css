@@ -48,7 +48,6 @@ body {
   align-items: center;
   background: black;
   z-index: 1;
-  box-sizing: border-box;
 }
 
 .header::before {
