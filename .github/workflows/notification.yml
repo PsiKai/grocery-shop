@@ -4,11 +4,9 @@ on:
   issues:
     types: bug
 
-jobs: 
+jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
       with:
-        - uses: notification/notification@v1
-        recipients:
-          bug=@psikai
+        recipients: bug=@psikai
