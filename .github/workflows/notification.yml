@@ -8,6 +8,6 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - uses: grocery-shop/notifications@v1
+      - uses: workflows/notification@v1
       with:
         recipients: bug=@psikai
