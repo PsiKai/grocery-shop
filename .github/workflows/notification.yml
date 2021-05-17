@@ -2,12 +2,12 @@ name: Notify QA on new QA tasks
 
 on:
   issues:
-    types: [bug]
+    types: [labeled]
 
 jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - uses: notification
+      - uses: psikai/notification
       with:
         recipients: bug=@psikai
