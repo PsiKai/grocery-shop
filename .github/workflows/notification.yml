@@ -2,7 +2,7 @@ name: Notify QA on new QA tasks
 
 on:
   issues:
-    types: [bug]
+    types: bug
 
 jobs: 
   notify:
