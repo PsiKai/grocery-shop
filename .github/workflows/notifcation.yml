@@ -1,0 +1,14 @@
+name: Notify QA on new QA tasks
+
+on:
+  issues:
+    types: [bug]
+
+jobs: 
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      with:
+        - uses: notification/notification@v1
+        recipients:
+          bug=@psikai
